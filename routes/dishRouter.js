@@ -163,14 +163,14 @@ dishRouter
       .then(
         (dish) => {
           if (dish !== null) {
-            for (comment of dish.comments) {
-              dish.comments.id(comment._id).remove();
+            // for (comment of dish.comments) {
+            //   dish.comments.id(comment._id).remove();
+            // }
+
+            for (var i = dish.comments.length - 1; i >= 0; i--) {
+              dish.comments.id(dish.comments[i]._id).remove();
             }
-            /*
-              for(var i = (dish.comments.length - 1); i >= 0; i--) {
-                dish.comments.id(dish.comments[i]._id).remove();
-              }
-            */
+
             dish.save().then(
               (dish) => {
                 res.statusCode = 200;
