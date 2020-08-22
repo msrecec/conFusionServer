@@ -31,7 +31,6 @@ promoRouter
     Promotions.create(req.body)
       .then(
         (promotion) => {
-          console.log('Promotion Created', promotion);
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           res.json(promotion);
