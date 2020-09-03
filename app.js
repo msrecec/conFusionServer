@@ -49,45 +49,25 @@ app.use(
   })
 );
 
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
 function auth(req, res, next) {
   console.log(req.session);
 
   if (!req.session.user) {
-    let authHeader = req.headers.authorization;
+    let err = new Error('You are not authenticated!');
 
-    if (!authHeader) {
-      let err = new Error('You are not authenticated!');
-
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next(err);
-    }
-
-    let auth = new Buffer.from(authHeader.split(' ')[1], 'base64')
-      .toString()
-      .split(':');
-
-    let username = auth[0];
-    let password = auth[1];
-
-    if (username === 'admin' && password === 'password') {
-      req.session.user = 'admin';
-      next();
-    } else {
-      let err = new Error('You are not authenticated!');
-
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-
-      return next(err);
-    }
+    res.setHeader('WWW-Authenticate', 'Basic');
+    err.status = 403;
+    return next(err);
   } else {
-    if (req.session.user === 'admin') {
+    if (req.session.user === 'authenticated') {
       next();
     } else {
       let err = new Error('You are not authenticated!');
 
-      err.status = 401;
+      err.status = 403;
       return next(err);
     }
   }
@@ -100,8 +80,6 @@ app.use(auth);
 app.use(express.static(path.join(__dirname, 'public')));
 
 //adding routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/dishes', dishRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
