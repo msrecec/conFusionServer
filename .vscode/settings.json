@@ -3,6 +3,7 @@
     "confusionserver",
     "firstname",
     "lastname",
+    "originalname",
     "resave"
   ]
 }
