@@ -46,7 +46,6 @@ exports.verifyAdmin = (req, res, next) => {
     return next(err);
   }
 };
-
 exports.facebookPassport = passport.use(
   new FacebookTokenStrategy(
     {
