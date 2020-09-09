@@ -3,3 +3,4 @@
 /bin/certificate.pem
 /bin/cert.csr
 /config.js
+/dbfiles.json

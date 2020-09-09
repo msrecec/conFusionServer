@@ -1,16 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const favoriteDishSchema = new Schema(
-  {
-    favoriteDish: {
-      type: Schema.Types.ObjectId,
-      ref: 'Dish',
-      unique: true,
-    },
-  },
-  { timestamps: true }
-);
+// const favoriteDishSchema = new Schema({
+//   favoriteDish: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'Dish',
+//   },
+// });
 
 const favoriteSchema = new Schema(
   {
@@ -18,7 +14,12 @@ const favoriteSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    favoriteDishes: [favoriteDishSchema],
+    favoriteDishes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Dish',
+      },
+    ],
   },
   {
     timestamps: true,
